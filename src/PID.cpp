@@ -13,14 +13,16 @@ PID::PID() {}
 
 PID::~PID() {}
 
-void PID::Init(double Kp, double Ki, double Kd, double ai, bool twiddle) {
+void PID::Init(double Kp, double Ki0, double ai, double Kd, bool twiddle) {
   p_error_ = 0;
   i_error_ = 0;
   d_error_ = 0;
+  
   Kp_ = Kp;
-  Ki_ = Ki;
-  Kd_ = Kd;
+  Ki0_ = Ki0;
   ai_ = ai;
+  Ki_ = Ki0_;
+  Kd_ = Kd;
   
   step_ = 1;
   twiddle_ = twiddle;
@@ -65,7 +67,6 @@ void PID::UpdateError(double cte) {
   // Twiddle parameters just after having collected enough error measurements
   if (twiddle_ and (step_ % (twiddle_settle_n_ + twiddle_eval_n_) == 0))
   {
-  
     cout << "Parameter twiddle" << endl;
     cout << "  step: " << step_ << endl;
     cout << "  error: " << twiddle_error_ << endl;
@@ -88,6 +89,10 @@ void PID::UpdateError(double cte) {
         twiddle_tried_adding_ = false;
         twiddle_tried_subtracting_ = false;
         */
+    }
+    else
+    {
+      cout << "  WORSE" << endl;
     }
     
     cout << "  working on parameter: " << twiddle_param_index_ << endl;

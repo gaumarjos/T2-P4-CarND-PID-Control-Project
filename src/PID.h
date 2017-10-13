@@ -16,13 +16,10 @@ public:
   * Coefficients
   */ 
   double Kp_;
+  double Ki0_;
+  double ai_;
   double Ki_;
   double Kd_;
-  
-  /*
-  * Coefficient linking speed and PID coefficients
-  */
-  double ai_ = 0.001;
   
   /*
   * Twiddle
