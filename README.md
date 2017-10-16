@@ -3,6 +3,21 @@ Self-Driving Car Engineer Nanodegree Program
 
 ---
 
+## Rubric points
+
+### Effect each of the P, I, D components
+
+#### Proportional
+THis component is proportional to the current error (in this case, the distance of the car from the road centre). This is the component that has the most directly observable effect on the car's behavior as the control signal is proportional to the current error. The biggest shortcoming of a P-only controller is that the car starts oscillating around the desired trajectory.
+
+#### Differential
+This components is proportional to the error derivative and is instrumental to counteract the ringing introduced by the proportional component. If properly tuned, overshoots are damped ad the car approches the desired trajectory smoothly.
+
+#### Integral
+This component is proportional to the running sum of the errors accumulated up to the present point. It's used to balance a possible bias in the error that can prevent a PD-only controller from reaching the desired trajectory. IN this particular application, I noticed that its biggest effect is helping driving through curves in a smoother way.
+
+
+
 ## Dependencies
 
 * cmake >= 3.5
