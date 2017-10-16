@@ -10,13 +10,31 @@ Self-Driving Car Engineer Nanodegree Program
 #### Proportional
 THis component is proportional to the current error (in this case, the distance of the car from the road centre). This is the component that has the most directly observable effect on the car's behavior as the control signal is proportional to the current error. The biggest shortcoming of a P-only controller is that the car starts oscillating around the desired trajectory.
 
+[Video example, P controller](videos/p.mp4)
+
 #### Differential
 This components is proportional to the error derivative and is instrumental to counteract the ringing introduced by the proportional component. If properly tuned, overshoots are damped ad the car approches the desired trajectory smoothly.
 
+[Video example, PD controller](videos/pd.mp4)
+
 #### Integral
-This component is proportional to the running sum of the errors accumulated up to the present point. It's used to balance a possible bias in the error that can prevent a PD-only controller from reaching the desired trajectory. IN this particular application, I noticed that its biggest effect is helping driving through curves in a smoother way.
+This component is proportional to the running sum of the errors accumulated up to the present point. It's used to balance a possible bias in the error that can prevent a PD-only controller from reaching the desired trajectory. In this particular application, I noticed that its biggest effect is helping driving through curves in a smoother way.
 
+[Video example, PID controller](videos/pid.mp4)
 
+### Choice of the hyperparameters (P, I, D coefficients)
+The PID controller was first tuned manually. I started with a P controller and tuned P so the car could keep the trajectory, obviously with lots of oscillations. I then introduced D, increasing it up to the point where oscilaltions subsidized and the car was able to drive around without major issues. Last, I started adding increasing the I coefficient, up to a point were curves were taken correctly. Eventually, I choose I to have a fixed component and one proportional to the car speed as I noticed this produced a better overall behaviour than using a fixed I.
+
+I also implemented a runtime version of twiddle to further optimize the parameters (to be used when the car was already able to stay on the track). I noticed that 1000 data points (about 1 lap) were necessary to have a meaningful error estimation (i.e. covering both straights and curves) and iterated about 50 times.
+I did not use twiddle, however, to fine tune the parameters but rather to identify in which direction to go. The final tuning was done manually.
+
+The final choice of hyperparameters was:
+
+| Component | Value                    |
+|-----------|--------------------------|
+| P         | 0.12                     |
+| D         | 3.10                     |
+| I         | 0.00005 + 0.00015*speeed |
 
 ## Dependencies
 
