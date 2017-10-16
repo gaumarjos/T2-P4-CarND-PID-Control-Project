@@ -36,7 +36,7 @@ int main()
   // TODO: Initialize the pid variable.
   steering_pid.Init(0.12,   // Kp
                     0.00005,  // Ki0
-                    0.0002, // ai
+                    0.00015, // ai
                     3.1,    // Kd
                     false); // twiddle on/off
 
